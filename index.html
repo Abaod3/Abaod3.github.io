@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محول فيديو تيك توك - 60fps جودة عالية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <main class="container">
+    <header class="hero">
+      <div class="badge">TikTok Ready</div>
+      <h1>حوّل فيديوك إلى <span class="accent">60FPS</span><br>بجودة خرافية</h1>
+      <p class="subtitle">ارفع الفيديو، وحنا نجهزه بأعلى جودة مناسبة للتيك توك — المعالجة تتم داخل جهازك بدون رفع السيرفر.</p>
+    </header>
+
+    <section class="card upload-card">
+      <label class="dropzone" id="dropzone" for="fileInput">
+        <input type="file" id="fileInput" accept="video/*" hidden>
+        <div class="dropzone-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div class="dropzone-text">
+          <strong>اسحب الفيديو هنا أو اضغط للاختيار</strong>
+          <span id="fileName">MP4, MOV, MKV — يفضل مقطع قصير للتجربة</span>
+        </div>
+      </label>
+
+      <div class="settings">
+        <div class="setting">
+          <label class="setting-label" for="modeSelect">وضع التحويل</label>
+          <select id="modeSelect" class="select">
+            <option value="blend" selected>سريع (Blend) — موصى به</option>
+            <option value="mci">جودة حركة أعلى (MCI) — أبطأ بكثير</option>
+            <option value="dup">أسرع (تكرار إطارات) — أقل سلاسة</option>
+          </select>
+          <p class="setting-hint">وضع Blend يعطي سلاسة جيدة بسرعة معقولة داخل المتصفح.</p>
+        </div>
+
+        <div class="setting-row">
+          <label class="toggle">
+            <input type="checkbox" id="tiktokPreset" checked>
+            <span class="toggle-ui"></span>
+            <span class="toggle-label">
+              <strong>إعدادات تيك توك المثالية</strong>
+              <small>1080×1920 عمودي، H.264، bitrate عالي، صوت AAC</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <label class="toggle">
+            <input type="checkbox" id="sharpen">
+            <span class="toggle-ui"></span>
+            <span class="toggle-label">
+              <strong>حدة خفيفة (Sharpen)</strong>
+              <small>تعطي إحساس وضوح أعلى بدون مبالغة</small>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="convertBtn" class="btn btn-primary" disabled>
+          <span class="btn-text">ابدأ التحويل</span>
+        </button>
+        <p class="privacy-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          المعالجة تتم محليًا في متصفحك — الفيديو ما يطلع من جهازك.
+        </p>
+      </div>
+    </section>
+
+    <section class="card status-card" id="statusCard" aria-live="polite">
+      <div class="status-header">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">جاهز — اختر فيديو للبدء</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <pre class="log" id="log">سجل المعالجة سيظهر هنا...</pre>
+    </section>
+
+    <section class="card result-card hidden" id="resultCard">
+      <div class="result-header">
+        <h2>الفيديو جاهز</h2>
+        <span class="result-tag">60 FPS</span>
+      </div>
+      <video id="preview" class="preview" controls playsinline></video>
+      <div class="result-actions">
+        <a id="downloadLink" class="btn btn-primary" download>تحميل الفيديو</a>
+        <button id="resetBtn" class="btn btn-ghost">تحويل فيديو ثاني</button>
+      </div>
+      <p class="result-tip">نصيحة: ارفع الفيديو من تطبيق تيك توك واختر "Allow high-quality uploads" إن توفر الخيار.</p>
+    </section>
+
+    <footer class="footer">
+      <p>تنبيه: تيك توك يعيد ضغط الفيديو عند الرفع. هذه الأداة تجهز الملف بأفضل إعدادات ممكنة لتقليل فقدان الجودة.</p>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
