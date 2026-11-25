@@ -24,6 +24,7 @@ let busy = false;
 let resultUrl = null;
 
 const BASE_FFMPEG = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
+const BASE_UTIL = 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm';
 
 function setStatus(text, state = '') {
   statusText.textContent = text;
@@ -109,6 +110,7 @@ async function ensureFFmpeg() {
   setStatus('جاري تحميل محرك FFmpeg (أول مرة فقط)...', 'loading');
   log('تحميل ffmpeg-core...');
   await ffmpeg.load({
+    classWorkerURL: await toBlobURL(`${BASE_UTIL}/worker.js`, 'text/javascript'),
     coreURL: await toBlobURL(`${BASE_FFMPEG}/ffmpeg-core.js`, 'text/javascript'),
     wasmURL: await toBlobURL(`${BASE_FFMPEG}/ffmpeg-core.wasm`, 'application/wasm'),
   });
