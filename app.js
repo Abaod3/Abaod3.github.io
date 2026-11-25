@@ -123,7 +123,13 @@ async function ensureFFmpeg() {
     log('ffmpeg-core.js جاهز');
     const wasmURL = await toBlobURL(new URL('ffmpeg-core.wasm', BASE_LOCAL).href, 'application/wasm');
     log('ffmpeg-core.wasm جاهز');
-    await ffmpeg.load({ classWorkerURL, coreURL, wasmURL });
+    log('جاري تهيئة محرك FFmpeg (قد يأخذ وقت على الجوال)...');
+    const loadPromise = ffmpeg.load({ classWorkerURL, coreURL, wasmURL });
+    const slowTimer = setTimeout(() => {
+      log('لا يزال جاري التهيئة... إذا جهازك ضعيف أو الذاكرة ممتلئة قد يفشل.');
+    }, 20000);
+    await loadPromise;
+    clearTimeout(slowTimer);
   } catch (e) {
     ffmpegLoaded = false;
     ffmpeg = null;
