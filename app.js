@@ -93,10 +93,18 @@ async function ensureFFmpeg() {
   if (ffmpegLoaded && ffmpeg) return ffmpeg;
   if (!ffmpeg) ffmpeg = new FFmpeg();
 
+  let lastFrameLog = 0;
   ffmpeg.on('log', ({ message }) => {
     if (!message) return;
-    // Keep log readable; skip very noisy frame lines.
-    if (/^frame=\s*\d+/.test(message)) return;
+    // Show frame progress in status without spamming the log.
+    if (/^frame=\s*\d+/.test(message)) {
+      const now = Date.now();
+      if (now - lastFrameLog > 1000) {
+        lastFrameLog = now;
+        setStatus(`جاري التحويل... ${message.trim().slice(0, 80)}`, 'loading');
+      }
+      return;
+    }
     log(message);
   });
 
