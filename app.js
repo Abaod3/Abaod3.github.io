@@ -1,5 +1,5 @@
 import { FFmpeg } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
-import { fetchFile, toBlobURL } from 'https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js';
+import { fetchFile } from 'https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js';
 
 const fileInput = document.getElementById('fileInput');
 const dropzone = document.getElementById('dropzone');
@@ -23,8 +23,7 @@ let ffmpegLoaded = false;
 let busy = false;
 let resultUrl = null;
 
-const BASE_FFMPEG = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
-const BASE_UTIL = 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm';
+const BASE_LOCAL = new URL('./ffmpeg/', import.meta.url);
 
 function setStatus(text, state = '') {
   statusText.textContent = text;
@@ -116,11 +115,11 @@ async function ensureFFmpeg() {
   });
 
   setStatus('جاري تحميل محرك FFmpeg (أول مرة فقط)...', 'loading');
-  log('تحميل ffmpeg-core...');
+  log('تحميل ffmpeg-core من نفس الموقع...');
   await ffmpeg.load({
-    classWorkerURL: await toBlobURL(`${BASE_UTIL}/worker.js`, 'text/javascript'),
-    coreURL: await toBlobURL(`${BASE_FFMPEG}/ffmpeg-core.js`, 'text/javascript'),
-    wasmURL: await toBlobURL(`${BASE_FFMPEG}/ffmpeg-core.wasm`, 'application/wasm'),
+    classWorkerURL: new URL('worker.js', BASE_LOCAL).href,
+    coreURL: new URL('ffmpeg-core.js', BASE_LOCAL).href,
+    wasmURL: new URL('ffmpeg-core.wasm', BASE_LOCAL).href,
   });
   ffmpegLoaded = true;
   log('تم تحميل FFmpeg بنجاح.');

@@ -14,6 +14,7 @@
 - `index.html` — الواجهة
 - `style.css` — التنسيق
 - `app.js` — منطق التحويل باستخدام ffmpeg.wasm
+- `ffmpeg/` — ملفات محرك FFmpeg (core/wasm/worker) محلية من نفس الموقع
 
 ## التشغيل محليًا
 
